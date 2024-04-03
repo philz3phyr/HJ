@@ -441,7 +441,7 @@
 
 /*** Single Page Hero Header Start ***/
 .bg-breadcrumb {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/carousel-2.png);
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/consult2.jpg);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -618,7 +618,7 @@
 
 /*** Appointment Start ***/
 .appointment {
-    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url(../img/carousel-2.jpg);
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url(../img/back_gavel.jpg);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -1058,7 +1058,7 @@
 
 /*** Contact Start ***/
 .contact {
-    background: linear-gradient(rgba(243, 45, 10, 0.9), rgba(217, 34, 21, 0.9)), url(../img/attorneys.jpg);
+    background: linear-gradient(rgba(243, 45, 10, 0.459), rgba(217, 34, 21, 0.445)), url(../img/attorneys.jpg);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
