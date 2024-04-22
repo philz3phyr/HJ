@@ -28,23 +28,6 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-    <style>
-/* Custom CSS for modal */
-#cart-modal .modal-dialog {
-    width: 100%;
-    max-width: 100%;
-}
-
-#cart-modal .modal-content {
-    width: 100%;
-}
-
-#cart-modal .modal-body {
-    max-height: calc(100vh - 200px); /* Adjust height as needed */
-    overflow-y: auto;
-}
-
-        </style>
 </head>
 
 <body>
@@ -157,40 +140,9 @@
                 <h5 class="modal-title" id="cartModalLabel">Shopping Cart</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="row g4">
-            <div class="col-md-8 col-lg-8 col-xl-8">
             <div id="cart-items" class="modal-body">
                 <!-- Your existing code for the shopping cart display -->
             </div>
-            </div>
-            <div class="col-md-4 col-lg-4 col-xl-4">
-                <form id="paymentForm">
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email-address" required />
-                </div>
-                <div class="form-group">
-                    <label for="amount">Amount</label>
-                    <input type="tel" id="amount" required />
-                </div>
-                <div class="form-group">
-                    <label for="first-name">First Name</label>
-                    <input type="text" id="first-name" />
-                </div>
-                <div class="form-group">
-                    <label for="last-name">Last Name</label>
-                    <input type="text" id="last-name" />
-                </div>
-                <div class="form-submit">
-                    <button type="submit" onclick="payWithPaystack()"> Pay </button>
-                </div>
-                </form>
-            </div>
-</div>
-
-<script src="https://js.paystack.co/v1/inline.js"></script>
-    <div>
-    </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Checkout</button>
@@ -198,7 +150,6 @@
         </div>
     </div>
 </div>
-
 
 <?php include("footer.html") ?>
 
