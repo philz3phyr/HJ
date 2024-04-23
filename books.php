@@ -20,7 +20,7 @@
     <!-- Libraries Stylesheet -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/gh/eliyantosarage/font-awesome-pro@main/fontawesome-pro-6.5.1-web/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/eliyantosarage/font-awesome-pro@main/fontawesome-pro-6.5.1-web/css/all.min.css" rel="stylesheet"> 
 
 
     <!-- Customized Bootstrap Stylesheet -->
@@ -29,22 +29,23 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
     <style>
-/* Custom CSS for modal */
-#cart-modal .modal-dialog {
-    width: 100%;
-    max-width: 100%;
-}
+        /* Custom CSS for modal */
+        #cart-modal .modal-dialog {
+            width: 100%;
+            max-width: 100%;
+        }
 
-#cart-modal .modal-content {
-    width: 100%;
-}
+        #cart-modal .modal-content {
+            width: 100%;
+        }
 
-#cart-modal .modal-body {
-    max-height: calc(100vh - 200px); /* Adjust height as needed */
-    overflow-y: auto;
-}
+        #cart-modal .modal-body {
+            max-height: calc(100vh - 200px); /* Adjust height as needed */
+            overflow-y: auto;
+        }
 
         </style>
+
 </head>
 
 <body>
@@ -163,30 +164,14 @@
                 <!-- Your existing code for the shopping cart display -->
             </div>
             </div>
-            <div class="col-md-4 col-lg-4 col-xl-4">
-                <form id="paymentForm">
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email-address" required />
-                </div>
-                <div class="form-group">
-                    <label for="amount">Amount</label>
-                    <input type="tel" id="amount" required />
-                </div>
-                <div class="form-group">
-                    <label for="first-name">First Name</label>
-                    <input type="text" id="first-name" />
-                </div>
-                <div class="form-group">
-                    <label for="last-name">Last Name</label>
-                    <input type="text" id="last-name" />
-                </div>
-                <div class="form-submit">
-                    <button type="submit" onclick="payWithPaystack()"> Pay </button>
-                </div>
-                </form>
+            <div class="col-md-4 col-lg-4 col-xl-4" id="payment">
+                
             </div>
-</div>
+            
+            </div>
+            <div class="form-submit">
+                    <button class="btn btn-primary rounded-pill text-white py-2 px-4 mb-1" type="submit" onclick="payWithPaystack()"> Pay </button>
+            </div>
 
 <script src="https://js.paystack.co/v1/inline.js"></script>
     <div>
@@ -247,6 +232,13 @@
 
         // Update the cart display
         updateCart();
+
+        let totalCost = calculateTotalPrice();
+
+// Use a callback function to ensure addAdditionalContent is executed after the content is added
+        setTimeout(() => {
+            addAdditionalContent(totalCost);
+        }, 0);
     }
 
     // Function to calculate the total quantity of unique items in the cart
@@ -259,6 +251,51 @@
         });
         return totalQuantity;
     }
+
+    function calculateTotalPrice() {
+    let totalPrice = 0;
+    cartItems.forEach(item => {
+        totalPrice += item.price * item.quantity;
+    });
+    return totalPrice.toFixed(2); // Return total price rounded to 2 decimal places
+}
+
+function addAdditionalContent(totalCost) {
+    let paymentElement = document.getElementById('payment');
+    paymentElement.innerHTML = ''; // Clear the payment element
+
+    if (!document.getElementById('paymentForm')) {
+        let additionalContent = `
+            <div class="col-md-12">
+                <h5>Additional Information</h5>
+                <div class="col-md-4 col-lg-4 col-xl-4" id="paymentForm">
+                <form id="paymentForm">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email-address" required />
+                </div>
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input type="tel" id="amount" value=${totalCost} required />
+                </div>
+                <div class="form-group">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" />
+                </div>
+                <div class="form-group">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" />
+                </div>
+                
+            </form>
+                    
+                </div>
+            </div>
+        `;
+        paymentElement.insertAdjacentHTML('beforeend', additionalContent);
+    }
+}
+
 
     // Function to update cart display
     function updateCart() {
@@ -303,25 +340,91 @@
                                     <p class="lead fw-normal mb-0">Total: ${itemCost.toFixed(2)}</p>
                                 </div>
                             </div>
+                            <div class="col-md-2 d-flex justify-content-center">
+                                <div>
+                                    <p class="lead fw-normal mb-0">Total: ${totalCost.toFixed(2)}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             `;
+
         });
 
         // Update the total cost attribute
+
         let proceedButton = document.getElementById('proceed-button');
         if (proceedButton) {
             proceedButton.setAttribute('data-cart-total', totalCost.toFixed(2));
+
+            let totalAmountElement = document.getElementById('total-amount');
+            totalAmountElement.textContent = totalCost.toFixed(2); // Update total amount display
+
         }
+        console.log("Total cost:", totalCost.toFixed(2));
     }
 
     // Function to toggle the visibility of the shopping cart modal
     document.getElementById('cart-toggle').addEventListener('click', function () {
         var modal = new bootstrap.Modal(document.getElementById('cart-modal'));
         modal.show();
+
+        // Calculate total cost
+    let totalCost = calculateTotalPrice();
+
+// Use a callback function to ensure addAdditionalContent is executed after the content is added
+setTimeout(() => {
+    addAdditionalContent(totalCost);
+    redirectToPHP(calculateTotalPrice());
+}, 0);
+
     });
+
 </script>
+
+
+
+  <script>
+    var paymentForm = document.getElementById('paymentForm');
+    paymentForm.addEventListener('submit', payWithPaystack, false);
+    function payWithPaystack() {
+    var handler = PaystackPop.setup({
+        key: 'pk_test_ab3d605a280a2c2d3ac937901fa839110e2b66b7', // Replace with your public key
+        email: document.getElementById('email-address').value,
+        amount: document.getElementById('amount').value * 100, // the amount value is multiplied by 100 to convert to the lowest currency unit
+        currency: 'GHS', // Use GHS for Ghana Cedis or USD for US Dollars
+        ref: transactionReference, // Replace with a reference you generated
+        callback: function(response) {
+        //this happens after the payment is completed successfully
+        var reference = response.reference;
+        alert('Payment complete! Reference: ' + reference);
+        // Make an AJAX call to your server with the reference to verify the transaction
+        },
+        onClose: function() {
+        alert('Transaction was not completed, window closed.');
+        },
+    });
+    handler.openIframe();
+    }
+    </script>
+
+   <script>
+        function generateTransactionReference() {
+    // Get the current timestamp
+    let timestamp = Date.now();
+
+    // Generate a random number between 1000 and 9999
+    let randomNumber = Math.floor(Math.random() * 9000) + 1000;
+
+    // Concatenate the timestamp and random number to create the reference
+    let reference = timestamp.toString() + randomNumber.toString();
+
+    return reference;
+}
+
+let transactionReference = generateTransactionReference();
+  </script> 
 
 
 
